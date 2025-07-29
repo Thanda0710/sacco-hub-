@@ -3,768 +3,1148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUDI SACCO Hub - Member & Staff Portal</title>
+    <title>SACCO Nexus Pro</title>
     <style>
-        /* === Core Styles === */
+        /* === Cosmic SACCO Theme === */
         :root {
-            --primary: #2E86AB; /* Trust blue */
-            --secondary: #F18F01; /* Action orange */
-            --dark: #333;
-            --light: #F7F9FC;
-            --success: #48A14D;
-            --danger: #E71D36;
-            --transition: all 0.3s ease;
+            --quantum-blue: #00f2fe;
+            --nebula-purple: #4facfe;
+            --dark-matter: #0f0c29;
+            --plasma-pink: #fe5196;
+            --star-light: rgba(255,255,255,0.8);
+            --transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @font-face {
+            font-family: 'SACCO Futura';
+            src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
+            background: linear-gradient(135deg, var(--dark-matter) 0%, #1a1a2e 100%);
+            color: var(--star-light);
+            font-family: 'SACCO Futura', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            perspective: 1000px;
         }
 
-        /* === Layout === */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        /* === Interstellar Header === */
+        .cosmic-header {
+            background: linear-gradient(90deg, var(--dark-matter) 0%, rgba(15,12,41,0.8) 100%);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+            z-index: 10;
         }
 
-        /* === Header === */
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .cosmic-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 30%, 
+                    rgba(0, 242, 254, 0.1) 0%, 
+                    transparent 50%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(79, 172, 254, 0.1) 2px,
+                    rgba(79, 172, 254, 0.1) 4px
+                );
+            animation: starfield 60s linear infinite;
+            z-index: -1;
         }
 
-        .header-content {
+        @keyframes starfield {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* === Quantum Navigation === */
+        .quantum-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
-        .logo {
+        .nav-logo {
             font-size: 1.8rem;
-            font-weight: bold;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--quantum-blue), var(--nebula-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            letter-spacing: 2px;
         }
 
-        .auth-buttons button {
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            margin-left: 10px;
+        .nav-items {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            position: relative;
             cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            background: transparent;
+            border: none;
+            color: var(--star-light);
+            font-family: inherit;
         }
 
-        /* === Dashboard Grid === */
-        .dashboard {
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--plasma-pink), var(--quantum-blue));
+            transition: var(--transition);
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item:hover {
+            text-shadow: 0 0 10px var(--quantum-blue);
+        }
+
+        /* === Celestial Dashboard === */
+        .cosmic-dashboard {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 30px;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        @media (min-width: 768px) {
-            .dashboard {
-                grid-template-columns: 2fr 1fr;
+        @media (min-width: 1200px) {
+            .cosmic-dashboard {
+                grid-template-columns: 300px 1fr;
             }
         }
 
-        /* === Cards === */
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+        /* === Warp-Speed Sidebar === */
+        .warp-sidebar {
+            background: rgba(15, 12, 41, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
+            height: fit-content;
+            transform-style: preserve-3d;
+            transition: var(--transition);
         }
 
-        .card-header {
+        .warp-sidebar:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 10px 40px rgba(0, 242, 254, 0.2);
+        }
+
+        .member-card {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 2rem;
+            position: relative;
         }
 
-        /* === Noticeboard === */
-        .notice {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-left: 3px solid var(--primary);
-            background-color: rgba(46, 134, 171, 0.05);
-        }
-
-        .notice.urgent {
-            border-left-color: var(--danger);
-            background-color: rgba(231, 29, 54, 0.05);
-        }
-
-        /* === Progress Bars === */
-        .progress-container {
-            width: 100%;
-            background-color: #e0e0e0;
-            border-radius: 20px;
-            margin: 15px 0;
-        }
-
-        .progress-bar {
-            height: 20px;
-            border-radius: 20px;
-            background-color: var(--success);
-            text-align: center;
-            color: white;
-            font-size: 12px;
-            line-height: 20px;
-        }
-
-        /* === Leaderboard === */
-        .leaderboard-item {
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--quantum-blue), var(--plasma-pink));
             display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark-matter);
+            margin-bottom: 1rem;
+            border: 3px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+            transition: var(--transition);
         }
 
-        .leaderboard-item:last-child {
+        .member-avatar:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 50px rgba(254, 81, 150, 0.5);
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--star-light), #a1c4fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .member-id {
+            font-size: 0.9rem;
+            color: var(--quantum-blue);
+            letter-spacing: 1px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(79, 172, 254, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:last-child {
             border-bottom: none;
         }
 
-        .rank {
-            font-weight: bold;
-            color: var(--secondary);
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--star-light);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
         }
 
-        /* === Forms === */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        .form-group input, 
-        .form-group select, 
-        .form-group textarea {
+        .menu-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 242, 254, 0.1) 50%, 
+                transparent 100%);
+            transition: var(--transition);
+            z-index: -1;
         }
 
-        .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
+        .menu-link:hover::before {
+            left: 100%;
+        }
+
+        .menu-link:hover {
+            color: var(--quantum-blue);
+            padding-left: 10px;
+        }
+
+        .menu-icon {
+            font-size: 1.2rem;
+            min-width: 25px;
+        }
+
+        /* === Nebula Main Content === */
+        .nebula-main {
+            background: rgba(15, 12, 41, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
+            transform-style: preserve-3d;
+            transition: var(--transition);
+        }
+
+        .nebula-main:hover {
+            transform: translateY(-5px) rotateY(5deg);
+            box-shadow: 0 10px 40px rgba(254, 81, 150, 0.2);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .dashboard-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--quantum-blue) 20%, 
+                var(--plasma-pink) 80%, 
+                transparent 100%);
+            opacity: 0.3;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--quantum-blue), var(--plasma-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .view-all {
+            color: var(--nebula-purple);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .view-all:hover {
+            color: var(--quantum-blue);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        /* === Quantum Stats Grid === */
+        .quantum-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, 
+                rgba(0, 242, 254, 0.1) 0%, 
+                rgba(79, 172, 254, 0.05) 100%);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 242, 254, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, 
+                    transparent 0%, 
+                    rgba(0, 242, 254, 0.02) 50%, 
+                    transparent 100%);
+            z-index: 0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--nebula-purple);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--star-light), #a1c4fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .stat-change.positive {
+            color: #00e676;
+        }
+
+        .stat-change.negative {
+            color: #ff5252;
+        }
+
+        /* === Plasma Activity Feed === */
+        .activity-feed {
+            margin-top: 2rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(79, 172, 254, 0.1);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item:hover {
+            background: rgba(0, 242, 254, 0.03);
+            padding-left: 10px;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--plasma-pink), var(--quantum-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .activity-content {
+            flex-grow: 1;
+        }
+
+        .activity-title {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--star-light);
+        }
+
+        .activity-desc {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--quantum-blue);
+        }
+
+        /* === Stellar Transactions === */
+        .stellar-transactions {
+            margin-top: 2rem;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+        }
+
+        .transaction-table th {
+            text-align: left;
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+            color: var(--quantum-blue);
+            background: rgba(0, 242, 254, 0.05);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .transaction-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(79, 172, 254, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .transaction-table tr:hover td {
+            background: rgba(0, 242, 254, 0.03);
+        }
+
+        .transaction-type {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
             border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .transaction-type.deposit {
+            background: rgba(0, 230, 118, 0.1);
+            color: #00e676;
+        }
+
+        .transaction-type.withdrawal {
+            background: rgba(255, 82, 82, 0.1);
+            color: #ff5252;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+        }
+
+        /* === Quantum Loan Calculator === */
+        .quantum-calculator {
+            background: linear-gradient(135deg, 
+                rgba(15, 12, 41, 0.8) 0%, 
+                rgba(31, 28, 65, 0.8) 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(254, 81, 150, 0.2);
+            box-shadow: 0 0 30px rgba(254, 81, 150, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quantum-calculator::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 70% 70%, 
+                    rgba(254, 81, 150, 0.1) 0%, 
+                    transparent 50%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(254, 81, 150, 0.1) 2px,
+                    rgba(254, 81, 150, 0.1) 4px
+                );
+            animation: starfield 60s linear infinite reverse;
+            z-index: -1;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .calculator-result {
+            background: rgba(0, 242, 254, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 242, 254, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--plasma-pink), var(--quantum-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--nebula-purple);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--star-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            border-radius: 6px;
+            color: var(--star-light);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--quantum-blue);
+            box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.2);
+        }
+
+        .range-slider {
+            width: 100%;
+            margin-top: 0.5rem;
+            -webkit-appearance: none;
+            height: 6px;
+            background: rgba(79, 172, 254, 0.2);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--plasma-pink);
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px var(--plasma-pink);
         }
 
-        .btn-secondary {
-            background-color: var(--secondary);
-        }
-
-        /* === Tabs === */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-        }
-
-        .tab.active {
-            border-bottom-color: var(--primary);
+        .calculator-btn {
+            background: linear-gradient(90deg, var(--plasma-pink), var(--quantum-blue));
+            color: var(--dark-matter);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
             font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .tab-content {
-            display: none;
+        .calculator-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(254, 81, 150, 0.4);
         }
 
-        .tab-content.active {
-            display: block;
+        /* === Pulsar Notifications === */
+        .pulsar-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--dark-matter) 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            padding: 1.2rem;
+            border-left: 4px solid var(--plasma-pink);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transform: translateX(150%);
+            transition: var(--transition);
+            max-width: 300px;
+            z-index: 1000;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
         }
 
-        /* === Admin Panel === */
-        .admin-panel {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 30px;
+        .pulsar-notification.active {
+            transform: translateX(0);
         }
 
-        /* === Responsive === */
+        .notification-icon {
+            font-size: 1.5rem;
+            color: var(--plasma-pink);
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-title {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--star-light);
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .notification-close:hover {
+            color: var(--star-light);
+        }
+
+        /* === Responsive Adjustments === */
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
+            .cosmic-dashboard {
+                grid-template-columns: 1fr;
             }
             
-            .auth-buttons {
-                margin-top: 15px;
+            .calculator-grid {
+                grid-template-columns: 1fr;
             }
+            
+            .quantum-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-items {
+                display: none;
+            }
+        }
+
+        /* === Animation Keyframes === */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--quantum-blue); }
+            50% { box-shadow: 0 0 20px var(--quantum-blue); }
+            100% { box-shadow: 0 0 5px var(--quantum-blue); }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">SACCO Hub</div>
-            <div class="auth-buttons">
-                <button id="memberLoginBtn">Member Login</button>
-                <button id="staffLoginBtn" class="btn-secondary">Staff Login</button>
+    <!-- Cosmic Header -->
+    <header class="cosmic-header">
+        <div class="quantum-nav">
+            <div class="nav-logo">SACCO NEXUS</div>
+            <div class="nav-items">
+                <button class="nav-item">Dashboard</button>
+                <button class="nav-item">Transactions</button>
+                <button class="nav-item">Loans</button>
+                <button class="nav-item">Savings</button>
+                <button class="nav-item">Settings</button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Member Dashboard -->
-        <div id="memberDashboard">
-            <h1 style="margin: 20px 0;">Welcome, Member!</h1>
-            
-            <div class="dashboard">
-                <!-- Main Content -->
-                <div>
-                    <!-- Noticeboard -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Noticeboard</h2>
-                            <small id="lastUpdated"></small>
-                        </div>
-                        <div id="noticeboard">
-                            <div class="notice urgent">
-                                <h3>Important: Annual General Meeting</h3>
-                                <p>Join us on 15th December at 10AM for our AGM</p>
-                                <small>Posted: 1 day ago</small>
-                            </div>
-                            <div class="notice">
-                                <h3>New Loan Products Available</h3>
-                                <p>Check out our new education and emergency loan options</p>
-                                <small>Posted: 3 days ago</small>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Cosmic Dashboard -->
+    <div class="cosmic-dashboard">
+        <!-- Warp-Speed Sidebar -->
+        <aside class="warp-sidebar">
+            <div class="member-card">
+                <div class="member-avatar">JM</div>
+                <h3 class="member-name">John Member</h3>
+                <p class="member-id">ID: SACCO-7842-2023</p>
+            </div>
 
-                    <!-- Savings Progress -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>My Savings Progress</h2>
-                        </div>
-                        <div>
-                            <p>Goal: MWK 500,000</p>
-                            <div class="progress-container">
-                                <div class="progress-bar" id="savingsProgress" style="width: 45%">45%</div>
-                            </div>
-                            <p>Saved: MWK 225,000 (45%)</p>
-                            <button class="btn" style="margin-top: 10px;" id="makeDepositBtn">Make Deposit</button>
-                        </div>
-                    </div>
+            <ul class="sidebar-menu">
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">💳</span>
+                        <span>My Account</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">💰</span>
+                        <span>Savings</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">🏦</span>
+                        <span>Loans</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">🔄</span>
+                        <span>Transactions</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">📈</span>
+                        <span>Investments</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">⚙️</span>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Nebula Main Content -->
+        <main class="nebula-main">
+            <div class="dashboard-header">
+                <h2 class="section-title">Member Dashboard</h2>
+                <a href="#" class="view-all">
+                    <span>View All</span>
+                    <span>→</span>
+                </a>
+            </div>
+
+            <!-- Quantum Stats Grid -->
+            <div class="quantum-stats">
+                <div class="stat-card">
+                    <h3 class="stat-title">
+                        <span>📈</span>
+                        <span>Total Savings</span>
+                    </h3>
+                    <p class="stat-value">MWK 245,800</p>
+                    <p class="stat-change positive">
+                        <span>↑</span>
+                        <span>12.5% from last month</span>
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-title">
+                        <span>🏦</span>
+                        <span>Active Loan</span>
+                    </h3>
+                    <p class="stat-value">MWK 150,000</p>
+                    <p class="stat-change negative">
+                        <span>↓</span>
+                        <span>Due in 15 days</span>
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-title">
+                        <span>🌟</span>
+                        <span>Shares Value</span>
+                    </h3>
+                    <p class="stat-value">MWK 89,500</p>
+                    <p class="stat-change positive">
+                        <span>↑</span>
+                        <span>5.2% dividend</span>
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-title">
+                        <span>👥</span>
+                        <span>Referrals</span>
+                    </h3>
+                    <p class="stat-value">12</p>
+                    <p class="stat-change positive">
+                        <span>↑</span>
+                        <span>Earned MWK 24,000</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Plasma Activity Feed -->
+            <div class="activity-feed">
+                <div class="dashboard-header">
+                    <h2 class="section-title">Recent Activity</h2>
+                    <a href="#" class="view-all">
+                        <span>View All</span>
+                        <span>→</span>
+                    </a>
                 </div>
 
-                <!-- Sidebar -->
-                <div>
-                    <!-- Leaderboard -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Top Savers</h2>
-                        </div>
-                        <div id="leaderboard">
-                            <div class="leaderboard-item">
-                                <span class="rank">1.</span>
-                                <span>THANDAZA M.</span>
-                                <span>MWK 1,250,000</span>
-                            </div>
-                            <div class="leaderboard-item">
-                                <span class="rank">2.</span>
-                                <span>YANKHO L.</span>
-                                <span>MWK 980,000</span>
-                            </div>
-                            <div class="leaderboard-item">
-                                <span class="rank">3.</span>
-                                <span>CECILIA C.</span>
-                                <span>MWK 875,000</span>
-                            </div>
-                        </div>
+                <div class="activity-item">
+                    <div class="activity-icon">💵</div>
+                    <div class="activity-content">
+                        <h4 class="activity-title">Deposit Received</h4>
+                        <p class="activity-desc">You deposited MWK 25,000 into your savings account</p>
+                        <p class="activity-time">Today, 10:45 AM</p>
                     </div>
-
-                    <!-- Quick Tools -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Quick Tools</h2>
-                        </div>
-                        <div>
-                            <button class="btn" style="width: 100%; margin-bottom: 10px;" id="loanCalculatorBtn">Loan Calculator</button>
-                            <button class="btn" style="width: 100%; margin-bottom: 10px;" id="referralBtn">Enter Referral Code</button>
-                            <button class="btn btn-secondary" style="width: 100%;" id="whatsappBtn">Join WhatsApp Group</button>
-                        </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">📱</div>
+                    <div class="activity-content">
+                        <h4 class="activity-title">Mobile Money Transfer</h4>
+                        <p class="activity-desc">Sent MWK 10,000 to +265 991 234 567 via Airtel Money</p>
+                        <p class="activity-time">Yesterday, 3:22 PM</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">🏦</div>
+                    <div class="activity-content">
+                        <h4 class="activity-title">Loan Payment</h4>
+                        <p class="activity-desc">Paid MWK 15,000 towards your business loan</p>
+                        <p class="activity-time">Monday, 9:15 AM</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Member Tools Section -->
-            <div class="card" style="margin-top: 30px;">
-                <div class="card-header">
-                    <h2>Member Services</h2>
-                </div>
-                <div class="tabs">
-                    <div class="tab active" data-tab="feedback">Feedback</div>
-                    <div class="tab" data-tab="loan">Loan Application</div>
-                    <div class="tab" data-tab="stories">Share Your Story</div>
-                </div>
-
-                <div class="tab-content active" id="feedback">
-                    <form id="feedbackForm">
-                        <div class="form-group">
-                            <label for="feedbackType">Feedback Type</label>
-                            <select id="feedbackType" required>
-                                <option value="">Select...</option>
-                                <option value="suggestion">Suggestion</option>
-                                <option value="complaint">Complaint</option>
-                                <option value="praise">Praise</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="feedbackMessage">Message</label>
-                            <textarea id="feedbackMessage" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Submit Feedback</button>
-                    </form>
+            <!-- Stellar Transactions -->
+            <div class="stellar-transactions">
+                <div class="dashboard-header">
+                    <h2 class="section-title">Recent Transactions</h2>
+                    <a href="#" class="view-all">
+                        <span>View All</span>
+                        <span>→</span>
+                    </a>
                 </div>
 
-                <div class="tab-content" id="loan">
-                    <form id="loanForm">
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Today</td>
+                            <td>Savings Deposit</td>
+                            <td><span class="transaction-type deposit">Deposit</span></td>
+                            <td class="transaction-amount">MWK 25,000</td>
+                            <td>MWK 245,800</td>
+                        </tr>
+                        <tr>
+                            <td>Yesterday</td>
+                            <td>Airtel Money Transfer</td>
+                            <td><span class="transaction-type withdrawal">Withdrawal</span></td>
+                            <td class="transaction-amount">MWK 10,000</td>
+                            <td>MWK 220,800</td>
+                        </tr>
+                        <tr>
+                            <td>Monday</td>
+                            <td>Loan Repayment</td>
+                            <td><span class="transaction-type withdrawal">Withdrawal</span></td>
+                            <td class="transaction-amount">MWK 15,000</td>
+                            <td>MWK 230,800</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td>Dividend Credit</td>
+                            <td><span class="transaction-type deposit">Deposit</span></td>
+                            <td class="transaction-amount">MWK 4,750</td>
+                            <td>MWK 245,800</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Quantum Loan Calculator -->
+            <div class="quantum-calculator">
+                <h2 class="section-title">Loan Calculator</h2>
+                <div class="calculator-grid">
+                    <div>
                         <div class="form-group">
-                            <label for="loanAmount">Loan Amount (MWK)</label>
-                            <input type="number" id="loanAmount" required>
+                            <label for="loanAmount" class="form-label">Loan Amount (MWK)</label>
+                            <input type="range" id="loanAmount" class="range-slider" min="5000" max="500000" value="100000" step="5000">
+                            <input type="number" id="loanAmountValue" class="form-control" value="100000">
                         </div>
                         <div class="form-group">
-                            <label for="loanTerm">Repayment Period (months)</label>
-                            <input type="number" id="loanTerm" min="1" max="24" required>
+                            <label for="loanTerm" class="form-label">Repayment Period (months)</label>
+                            <input type="range" id="loanTerm" class="range-slider" min="1" max="24" value="12">
+                            <input type="number" id="loanTermValue" class="form-control" value="12">
                         </div>
                         <div class="form-group">
-                            <label for="loanPurpose">Purpose</label>
-                            <select id="loanPurpose" required>
-                                <option value="">Select...</option>
+                            <label for="loanPurpose" class="form-label">Loan Purpose</label>
+                            <select id="loanPurpose" class="form-control">
                                 <option value="business">Business</option>
                                 <option value="education">Education</option>
                                 <option value="emergency">Emergency</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn">Calculate & Apply</button>
-                    </form>
-                    <div id="loanResult" style="margin-top: 20px; display: none;">
-                        <h3>Loan Estimate</h3>
-                        <p>Monthly Payment: <span id="monthlyPayment"></span></p>
-                        <p>Total Interest: <span id="totalInterest"></span></p>
-                        <button class="btn btn-secondary" id="confirmLoanBtn">Confirm Application</button>
+                        <button class="calculator-btn" id="calculateLoan">
+                            <span>Calculate</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                    <div class="calculator-result">
+                        <p class="result-label">Monthly Payment</p>
+                        <p class="result-value" id="monthlyPayment">MWK 9,167</p>
+                        <p class="result-label">Total Interest</p>
+                        <p class="result-value" id="totalInterest">MWK 10,000</p>
+                        <p class="result-label">Total Repayment</p>
+                        <p class="result-value" id="totalRepayment">MWK 110,000</p>
                     </div>
                 </div>
-
-                <div class="tab-content" id="stories">
-                    <form id="storyForm">
-                        <div class="form-group">
-                            <label for="storyTitle">Title</label>
-                            <input type="text" id="storyTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="storyContent">Your Story</label>
-                            <textarea id="storyContent" rows="6" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="storyPhoto">Upload Photo (Optional)</label>
-                            <input type="file" id="storyPhoto" accept="image/*">
-                        </div>
-                        <button type="submit" class="btn">Share Your Story</button>
-                    </form>
-                </div>
             </div>
+        </main>
+    </div>
+
+    <!-- Pulsar Notification -->
+    <div class="pulsar-notification" id="notification">
+        <div class="notification-icon">💡</div>
+        <div class="notification-content">
+            <h4 class="notification-title">New Feature Available!</h4>
+            <p class="notification-message">Mobile money deposits are now 50% faster</p>
         </div>
-
-        <!-- Staff Dashboard (Initially Hidden) -->
-        <div id="staffDashboard" style="display: none;">
-            <h1 style="margin: 20px 0;">Staff Dashboard</h1>
-            
-            <div class="dashboard">
-                <!-- Main Content -->
-                <div>
-                    <!-- Member Stats -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>SACCO Statistics</h2>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                            <div style="text-align: center;">
-                                <h3 style="color: var(--primary);">1,248</h3>
-                                <p>Total Members</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <h3 style="color: var(--success);">MWK 58.2M</h3>
-                                <p>Total Savings</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <h3 style="color: var(--secondary);">MWK 32.7M</h3>
-                                <p>Active Loans</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <h3>97.5%</h3>
-                                <p>Repayment Rate</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Recent Activity</h2>
-                        </div>
-                        <div id="recentActivity">
-                            <div style="padding: 10px; border-bottom: 1px solid #eee;">
-                                <p>Chikondi M. applied for MWK 250,000 business loan</p>
-                                <small>10 minutes ago</small>
-                            </div>
-                            <div style="padding: 10px; border-bottom: 1px solid #eee;">
-                                <p>Tiyamike N. made deposit of MWK 50,000</p>
-                                <small>1 hour ago</small>
-                            </div>
-                            <div style="padding: 10px;">
-                                <p>New feedback submitted about mobile app</p>
-                                <small>3 hours ago</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sidebar -->
-                <div>
-                    <!-- Post Announcement -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Post Announcement</h2>
-                        </div>
-                        <form id="announcementForm">
-                            <div class="form-group">
-                                <label for="announcementTitle">Title</label>
-                                <input type="text" id="announcementTitle" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="announcementContent">Content</label>
-                                <textarea id="announcementContent" rows="4" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" id="isUrgent"> Urgent Announcement
-                                </label>
-                            </div>
-                            <button type="submit" class="btn">Post to Noticeboard</button>
-                        </form>
-                    </div>
-
-                    <!-- Quick Actions -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Quick Actions</h2>
-                        </div>
-                        <div>
-                            <button class="btn" style="width: 100%; margin-bottom: 10px;" id="updateStatsBtn">Update Statistics</button>
-                            <button class="btn" style="width: 100%; margin-bottom: 10px;" id="viewFeedbackBtn">View Feedback</button>
-                            <button class="btn btn-secondary" style="width: 100%;" id="digitalDisplayBtn">Control Digital Display</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Digital Display Mode (For Office Screens) -->
-        <div id="digitalDisplay" style="display: none; background-color: black; color: white; padding: 20px; text-align: center;">
-            <h1 style="font-size: 3rem; margin-bottom: 20px;">SACCO Hub Live Stats</h1>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 40px;">
-                <div>
-                    <h2 style="font-size: 5rem; color: var(--success);" id="displayTotalSavings">MWK 58.2M</h2>
-                    <p>Total Savings</p>
-                </div>
-                <div>
-                    <h2 style="font-size: 5rem; color: var(--secondary);" id="displayTotalLoans">MWK 32.7M</h2>
-                    <p>Active Loans</p>
-                </div>
-            </div>
-            <div style="margin-bottom: 40px;">
-                <h2>Top Savers This Month</h2>
-                <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px;">
-                    <div>
-                        <div style="width: 100px; height: 100px; background-color: gold; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-                            <span style="font-size: 2rem;">1</span>
-                        </div>
-                        <p>Chikondi M.</p>
-                        <p>MWK 1.25M</p>
-                    </div>
-                    <div>
-                        <div style="width: 100px; height: 100px; background-color: silver; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-                            <span style="font-size: 2rem;">2</span>
-                        </div>
-                        <p>Tiyamike N.</p>
-                        <p>MWK 980K</p>
-                    </div>
-                    <div>
-                        <div style="width: 100px; height: 100px; background-color: #cd7f32; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-                            <span style="font-size: 2rem;">3</span>
-                        </div>
-                        <p>Kondwani B.</p>
-                        <p>MWK 875K</p>
-                    </div>
-                </div>
-            </div>
-            <div id="displayNotice" style="margin-top: 40px; padding: 20px; background-color: #222; border-radius: 8px;">
-                <h2>Latest Announcement</h2>
-                <p style="font-size: 1.5rem;">Annual General Meeting on 15th December at 10AM</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer style="background-color: var(--dark); color: white; padding: 30px 0; margin-top: 50px;">
-        <div class="container">
-            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-                <div style="margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 15px;">SACCO Hub</h3>
-                    <p>Empowering our community through cooperative finance</p>
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 15px;">Quick Links</h3>
-                    <ul style="list-style: none;">
-                        <li style="margin-bottom: 5px;"><a href="#" style="color: white; text-decoration: none;">Home</a></li>
-                        <li style="margin-bottom: 5px;"><a href="#" style="color: white; text-decoration: none;">Savings</a></li>
-                        <li style="margin-bottom: 5px;"><a href="#" style="color: white; text-decoration: none;">Loans</a></li>
-                        <li><a href="#" style="color: white; text-decoration: none;">Contact</a></li>
-                    </ul>
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 15px;">Contact Us</h3>
-                    <p>Email: info@saccohub.mw</p>
-                    <p>Phone: +265 123 4567</p>
-                    <p>WhatsApp: +265 991 234 567</p>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #444;">
-                <p>© 2023 SACCO Hub. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        <button class="notification-close">&times;</button>
+    </div>
 
     <script>
         // === DOM Elements ===
-        const memberDashboard = document.getElementById('memberDashboard');
-        const staffDashboard = document.getElementById('staffDashboard');
-        const digitalDisplay = document.getElementById('digitalDisplay');
-        const memberLoginBtn = document.getElementById('memberLoginBtn');
-        const staffLoginBtn = document.getElementById('staffLoginBtn');
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const loanForm = document.getElementById('loanForm');
-        const loanResult = document.getElementById('loanResult');
-        const digitalDisplayBtn = document.getElementById('digitalDisplayBtn');
+        const loanAmountSlider = document.getElementById('loanAmount');
+        const loanAmountValue = document.getElementById('loanAmountValue');
+        const loanTermSlider = document.getElementById('loanTerm');
+        const loanTermValue = document.getElementById('loanTermValue');
+        const monthlyPayment = document.getElementById('monthlyPayment');
+        const totalInterest = document.getElementById('totalInterest');
+        const totalRepayment = document.getElementById('totalRepayment');
+        const calculateBtn = document.getElementById('calculateLoan');
+        const notification = document.getElementById('notification');
+        const notificationClose = document.querySelector('.notification-close');
 
-        // === Initialize Local Storage ===
-        if (!localStorage.getItem('notices')) {
-            localStorage.setItem('notices', JSON.stringify([
-                {
-                    title: 'Important: Annual General Meeting',
-                    content: 'Join us on 15th December at 10AM for our AGM',
-                    date: new Date().toISOString(),
-                    urgent: true
-                },
-                {
-                    title: 'New Loan Products Available',
-                    content: 'Check out our new education and emergency loan options',
-                    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-                    urgent: false
-                }
-            ]));
-        }
-
-        // === Tab Functionality ===
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
+        // === Sync Sliders with Inputs ===
+        loanAmountSlider.addEventListener('input', () => {
+            loanAmountValue.value = loanAmountSlider.value;
+            calculateLoan();
         });
 
-        // === Loan Calculator ===
-        loanForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        loanAmountValue.addEventListener('input', () => {
+            loanAmountSlider.value = loanAmountValue.value;
+            calculateLoan();
+        });
+
+        loanTermSlider.addEventListener('input', () => {
+            loanTermValue.value = loanTermSlider.value;
+            calculateLoan();
+        });
+
+        loanTermValue.addEventListener('input', () => {
+            loanTermSlider.value = loanTermValue.value;
+            calculateLoan();
+        });
+
+        // === Loan Calculation ===
+        function calculateLoan() {
+            const amount = parseFloat(loanAmountValue.value);
+            const term = parseInt(loanTermValue.value);
+            const purpose = document.getElementById('loanPurpose').value;
             
-            const amount = parseFloat(document.getElementById('loanAmount').value);
-            const term = parseInt(document.getElementById('loanTerm').value);
-            
-            // Simple interest calculation (5% monthly)
-            const interestRate = 0.05;
-            const totalInterest = amount * interestRate * term;
-            const totalPayment = amount + totalInterest;
-            const monthlyPayment = totalPayment / term;
-            
-            document.getElementById('monthlyPayment').textContent = `MWK ${monthlyPayment.toFixed(2)}`;
-            document.getElementById('totalInterest').textContent = `MWK ${totalInterest.toFixed(2)}`;
-            
-            loanResult.style.display = 'block';
-        });
-
-        document.getElementById('confirmLoanBtn').addEventListener('click', () => {
-            alert('Loan application submitted successfully! We will contact you shortly.');
-            loanForm.reset();
-            loanResult.style.display = 'none';
-        });
-
-        // === Form Submissions ===
-        document.getElementById('feedbackForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for your feedback!');
-            e.target.reset();
-        });
-
-        document.getElementById('storyForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for sharing your story! It will be reviewed and may be featured.');
-            e.target.reset();
-        });
-
-        // === Digital Display Mode ===
-        digitalDisplayBtn.addEventListener('click', () => {
-            memberDashboard.style.display = 'none';
-            staffDashboard.style.display = 'none';
-            digitalDisplay.style.display = 'block';
-            
-            // Simulate live updates
-            setInterval(() => {
-                const savingsElement = document.getElementById('displayTotalSavings');
-                const currentSavings = parseFloat(savingsElement.textContent.replace('MWK ', '').replace('M', ''));
-                savingsElement.textContent = `MWK ${(currentSavings + 0.1).toFixed(1)}M`;
-            }, 5000);
-        });
-
-        // === Login Simulation ===
-        memberLoginBtn.addEventListener('click', () => {
-            memberDashboard.style.display = 'block';
-            staffDashboard.style.display = 'none';
-            digitalDisplay.style.display = 'none';
-        });
-
-        staffLoginBtn.addEventListener('click', () => {
-            const password = prompt('Enter staff password:');
-            if (password === 'sacco123') { // In real app, use proper auth
-                memberDashboard.style.display = 'none';
-                staffDashboard.style.display = 'block';
-                digitalDisplay.style.display = 'none';
-            } else {
-                alert('Incorrect password');
+            // Different interest rates based on purpose
+            let interestRate;
+            switch(purpose) {
+                case 'business': interestRate = 0.10; break;
+                case 'education': interestRate = 0.08; break;
+                case 'emergency': interestRate = 0.15; break;
+                default: interestRate = 0.12;
             }
-        });
-
-        // === Quick Actions ===
-        document.getElementById('whatsappBtn').addEventListener('click', () => {
-            window.open('https://wa.me/265991234567?text=Hello%20SACCO%20Hub');
-        });
-
-        document.getElementById('loanCalculatorBtn').addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
             
-            document.querySelector('.tab[data-tab="loan"]').classList.add('active');
-            document.getElementById('loan').classList.add('active');
+            const totalInt = amount * interestRate;
+            const totalRepay = amount + totalInt;
+            const monthlyPay = totalRepay / term;
             
-            // Scroll to form
-            document.getElementById('loan').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // === Initialize Noticeboard ===
-        function loadNotices() {
-            const noticeboard = document.getElementById('noticeboard');
-            const notices = JSON.parse(localStorage.getItem('notices'));
-            
-            noticeboard.innerHTML = '';
-            
-            notices.forEach(notice => {
-                const noticeElement = document.createElement('div');
-                noticeElement.className = `notice ${notice.urgent ? 'urgent' : ''}`;
-                noticeElement.innerHTML = `
-                    <h3>${notice.title}</h3>
-                    <p>${notice.content}</p>
-                    <small>Posted: ${formatDate(notice.date)}</small>
-                `;
-                noticeboard.appendChild(noticeElement);
-            });
-            
-            document.getElementById('lastUpdated').textContent = `Last updated: ${formatDate(new Date().toISOString())}`;
+            monthlyPayment.textContent = `MWK ${monthlyPay.toFixed(0)}`;
+            totalInterest.textContent = `MWK ${totalInt.toFixed(0)}`;
+            totalRepayment.textContent = `MWK ${totalRepay.toFixed(0)}`;
         }
 
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-            
-            if (diffDays === 0) return 'Today';
-            if (diffDays === 1) return 'Yesterday';
-            if (diffDays < 7) return `${diffDays} days ago`;
-            
-            return date.toLocaleDateString();
+        // Initial calculation
+        calculateLoan();
+
+        // Recalculate when purpose changes
+        document.getElementById('loanPurpose').addEventListener('change', calculateLoan);
+
+        // === Notification System ===
+        function showNotification() {
+            notification.classList.add('active');
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 5000);
         }
 
-        // === Staff Announcement Form ===
-        document.getElementById('announcementForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const title = document.getElementById('announcementTitle').value;
-            const content = document.getElementById('announcementContent').value;
-            const isUrgent = document.getElementById('isUrgent').checked;
-            
-            const notices = JSON.parse(localStorage.getItem('notices'));
-            notices.unshift({
-                title,
-                content,
-                date: new Date().toISOString(),
-                urgent: isUrgent
-            });
-            
-            localStorage.setItem('notices', JSON.stringify(notices));
-            loadNotices();
-            
-            alert('Announcement posted successfully!');
-            e.target.reset();
+        notificationClose.addEventListener('click', () => {
+            notification.classList.remove('active');
         });
 
-        // === Initialize App ===
-        loadNotices();
+        // Show notification after 3 seconds
+        setTimeout(showNotification, 3000);
+
+        // === Animate Stats on Scroll ===
+        const statCards = document.querySelectorAll('.stat-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'float 3s ease-in-out infinite';
+                    entry.target.style.opacity = '1';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        statCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transition = 'opacity 0.5s ease';
+            observer.observe(card);
+        });
+
+        // === Form Submission ===
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showNotification();
+                
+                // In a real app, this would submit to your Java backend
+                // fetch('/api/submit', {
+                //   method: 'POST',
+                //   body: new FormData(form)
+                // });
+                
+                // For demo, just show success
+                notification.querySelector('.notification-title').textContent = 'Success!';
+                notification.querySelector('.notification-message').textContent = 'Your request has been processed';
+                notification.querySelector('.notification-icon').textContent = '✅';
+                showNotification();
+            });
+        });
+
+        // === Interactive Elements ===
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                link.querySelector('.menu-icon').style.transform = 'rotate(15deg)';
+            });
+            link.addEventListener('mouseleave', () => {
+                link.querySelector('.menu-icon').style.transform = 'rotate(0)';
+            });
+        });
+
+        // === Floating Animation for Avatar ===
+        const avatar = document.querySelector('.member-avatar');
+        setInterval(() => {
+            avatar.style.transform = `translateY(${Math.sin(Date.now() / 800) * 5}px)`;
+        }, 50);
     </script>
 </body>
 </html>
